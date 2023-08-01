@@ -161,4 +161,4 @@ Jul 28 11:51:21 vdi-cicd systemd[1]: Started SYSV: HAProxy is a TCP/HTTP reverse
 ``` 
 <br/>
 
-### In this docs, I only setup environment. With write file ingress i will talk later.
+### In this document, I only setup the environment. I will talk about writing the 'ingress' file.
