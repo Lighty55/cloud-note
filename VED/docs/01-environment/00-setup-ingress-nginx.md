@@ -81,6 +81,7 @@ $ zypper install haproxy
 <br/>
 
 - Paste this config to the file /etc/haproxy/haproxy.cfg
+
 ```
 global
     chroot      /var/lib/haproxy
@@ -115,11 +116,11 @@ frontend http_frontend
 
 backend http_backend
     server lab-masternode01 172.16.68.150:32012 check # IPv4 addresses of the master and worker nodes
-    server lab-masternode02 172.16.68.151:32012 check
-    server lab-masternode03 172.16.68.152:32012 check
-    server lab-workernode01 172.16.68.153:32012 check
-    server lab-workernode02 172.16.68.154:32012 check
-    server lab-workernode03 172.16.68.155:32012 check
+    server lab-masternode02 172.16.68.151:32012 check # IPv4 addresses of the master and worker nodes
+    server lab-masternode03 172.16.68.152:32012 check # IPv4 addresses of the master and worker nodes
+    server lab-workernode01 172.16.68.153:32012 check # IPv4 addresses of the master and worker nodes
+    server lab-workernode02 172.16.68.154:32012 check # IPv4 addresses of the master and worker nodes
+    server lab-workernode03 172.16.68.155:32012 check # IPv4 addresses of the master and worker nodes
 
 frontend https_frontend
     bind *:443
@@ -127,10 +128,34 @@ frontend https_frontend
 
 backend https_backend
     server lab-masternode01 172.16.68.150:32002 check # IPv4 addresses of the master and worker nodes
-    server lab-masternode02 172.16.68.151:32002 check
-    server lab-masternode03 172.16.68.152:32002 check
-    server lab-workernode01 172.16.68.153:32002 check
-    server lab-workernode02 172.16.68.154:32002 check
-    server lab-workernode03 172.16.68.155:32002 check
+    server lab-masternode02 172.16.68.151:32002 check # IPv4 addresses of the master and worker nodes
+    server lab-masternode03 172.16.68.152:32002 check # IPv4 addresses of the master and worker nodes
+    server lab-workernode01 172.16.68.153:32002 check # IPv4 addresses of the master and worker nodes
+    server lab-workernode02 172.16.68.154:32002 check # IPv4 addresses of the master and worker nodes
+    server lab-workernode03 172.16.68.155:32002 check # IPv4 addresses of the master and worker nodes
 ```
 
+- After setup config, reboot haproxy to apply the new config.
+
+```
+$ systemctl restart haproxy
+$ systemctl status haproxy # view status of haproxy
+● haproxy.service - SYSV: HAProxy is a TCP/HTTP reverse proxy which is particularly suited for high availability environments.
+   Loaded: loaded (/etc/rc.d/init.d/haproxy; bad; vendor preset: disabled)
+   Active: active (running) since Fri 2023-07-28 11:51:21 +07; 4 days ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 1169 ExecStart=/etc/rc.d/init.d/haproxy start (code=exited, status=0/SUCCESS)
+ Main PID: 1293 (haproxy)
+    Tasks: 2
+   Memory: 4.3M
+   CGroup: /system.slice/haproxy.service
+           └─1293 /usr/sbin/haproxy -D -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid
+
+Jul 28 11:51:20 vdi-cicd systemd[1]: Starting SYSV: HAProxy is a TCP/HTTP reverse proxy which is particularly suited for high availability environments....
+Jul 28 11:51:20 vdi-cicd haproxy[1169]: /etc/rc.d/init.d/haproxy: line 26: [: =: unary operator expected
+Jul 28 11:51:21 vdi-cicd haproxy[1169]: Starting haproxy: [NOTICE]   (1285) : haproxy version is 2.6.0-a1efc04
+Jul 28 11:51:21 vdi-cicd haproxy[1169]: [NOTICE]   (1285) : path to executable is /usr/sbin/haproxy
+Jul 28 11:51:21 vdi-cicd haproxy[1169]: [ALERT]    (1285) : config : parsing [/etc/haproxy/haproxy.cfg:3] : 'pidfile' already specified. Continuing.
+Jul 28 11:51:21 vdi-cicd haproxy[1169]: [  OK  ]
+Jul 28 11:51:21 vdi-cicd systemd[1]: Started SYSV: HAProxy is a TCP/HTTP reverse proxy which is particularly suited for high availability environments..
+``` 
