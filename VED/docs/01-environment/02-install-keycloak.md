@@ -10,8 +10,11 @@ $ cd ~/projects/dev/ml/VED
 ```
 
 <br/>
+
 ### If you using longhorn.
+
 - Add `spec.temlace.spec.securityContext.fsGroup=1001` to file keycloak.yaml (notice: add this text to the deployment not add pvc or service).
+
 ```
 ...
 spec:
@@ -23,6 +26,7 @@ spec:
 ```
 
 <br/>
+
 ```
 $ kubectl create ns keycloak
 $ kubectl create -f Chapter04/keycloak.yaml
