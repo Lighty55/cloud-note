@@ -20,54 +20,37 @@ $ cd ~/projects/dev/ml/VED
 spec:
   templace:
     spec:
-      securityContext:
+      securityContext: <- This is you need to add in.
         fsGroup: 1001
 ...
 ```
 
 <br/>
 
+### Deploy keycloak (Including Deployment, service, pvc)
+
+<br/>
+
 ```
 $ kubectl create ns keycloak
 $ kubectl create -f Chapter04/keycloak.yaml
-$ kubectl get pod -n keycloak
+$ kubectl get pod,serivce,pvc -n keycloak
 ```
 
 <br/>
 
-```
-// $ watch kubectl get pods -n keycloak
-NAME                        READY   STATUS    RESTARTS   AGE
-keycloak-75799d947b-l9mkw   1/1     Running   0          56s
-
-```
+### Deploy ingress Keycloak
 
 <br/>
 
 ```
-$ export MINIKUBE_IP_ADDR=$(minikube ip --profile ${PROFILE})
-$ echo ${MINIKUBE_IP_ADDR}
-```
+$ kubectl create ingress keycloak-ingress.yaml -n keycloak
 
-<br/>
+# After deploy, we will check state of keycloak-ingress
 
-```
-// Check
-// $ envsubst < Chapter04/keycloak/keycloak-ingress.yaml
-```
-
-<br/>
-
-```
-$ envsubst < Chapter04/keycloak/keycloak-ingress.yaml | kubectl create -f - -n keycloak
-```
-
-<br/>
-
-```
-// $ kubectl get ingress -n keycloak
-NAME       CLASS   HOSTS                          ADDRESS        PORTS     AGE
-keycloak   nginx   keycloak.192.168.49.2.nip.io   192.168.49.2   80, 443   4m8s
+$ kubectl get ingress -n keycloak
+NAME       CLASS   HOSTS                 ADDRESS         PORTS     AGE
+keycloak   nginx   keycloak-vedlab.com   10.233.17.182   80, 443   10d
 ```
 
 <br/>
@@ -75,7 +58,7 @@ keycloak   nginx   keycloak.192.168.49.2.nip.io   192.168.49.2   80, 443   4m8s
 ```
 // Administration Console
 // admin / admin
-$ echo https://keycloak.${MINIKUBE_IP_ADDR}.nip.io/auth/
+$ echo https://keycloak-vedlab.com/auth/
 ```
 
 <br/>
