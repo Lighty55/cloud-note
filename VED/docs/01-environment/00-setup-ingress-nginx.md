@@ -159,3 +159,6 @@ Jul 28 11:51:21 vdi-cicd haproxy[1169]: [ALERT]    (1285) : config : parsing [/e
 Jul 28 11:51:21 vdi-cicd haproxy[1169]: [  OK  ]
 Jul 28 11:51:21 vdi-cicd systemd[1]: Started SYSV: HAProxy is a TCP/HTTP reverse proxy which is particularly suited for high availability environments..
 ``` 
+<br/>
+
+### In this docs, I only setup environment. With write file ingress i will talk later.
