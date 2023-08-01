@@ -43,5 +43,7 @@ ingress-nginx-controller-metrics     ClusterIP   10.233.33.184   <none>        1
 
 <br/>
 
-- Haproy it is a Loadbalancer. In this project we using 
+- Haproxy it is a application Loadbalancer. In this project, we will using it connect to ingress-nginx of kubernetes currently NodePort.
+- As you can see above, the `ingress-nginx-controller` service has the type `NodePort` and it is exposing port `32012` and `32002`.
+
 
