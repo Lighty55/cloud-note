@@ -2,21 +2,9 @@
 
 https://github.com/opendatahub-io/opendatahub-operator
 
-<br/>
-
-```
-$ eval $(minikube --profile ${PROFILE} docker-env)
-$ docker pull registry.access.redhat.com/redhat/community-operator-index:v4.9
-$ docker pull quay.io/opendatahub/opendatahub-operator:v1.1.1
-```
-
-<!-- <br/>
-
-// looks next method is not working right now
-https://dev.operatorhub.io/operator/opendatahub-operator -->
+## Install community-operators-redhat
 
 <br/>
-
 ```yaml
 $ cat << EOF | kubectl apply -f -
 apiVersion: operators.coreos.com/v1alpha1
@@ -46,6 +34,10 @@ opendatahub-operator                        Community Operators Red Hat   52s
 
 <br/>
 
+## Install OpendataHub-operator
+
+<br/>
+
 ```yaml
 $ cat << EOF | kubectl apply -f -
 apiVersion: operators.coreos.com/v1alpha1
@@ -68,42 +60,37 @@ EOF
 
 <br/>
 
-When start, need to run same yaml with Manual option, otherwise it updates on broken version.
+- After finishing pasting the above section, please continue and paste the following section below this.
 
 <br/>
 
 ```
-// 120 sec
-$ k9s -n operators
+$ cat << EOF | kubectl apply -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: opendatahub-operator
+  namespace: operators
+spec:
+  channel: stable
+  installPlanApproval: Manual
+  name: opendatahub-operator
+  source: community-operators-redhat
+  sourceNamespace: olm
+  startingCSV: opendatahub-operator.v1.1.1
+EOF
+```
+<br/>
 
-// $ kubectl get pods -n operators
+```
+$ kubectl get pod -n operators
 NAME                                   READY   STATUS    RESTARTS   AGE
 opendatahub-operator-b5f4c5757-d9td2   1/1     Running   0          15s
 ```
-
-<!-- <br/>
-
-```
-// Обновление
-
-$ export namespace=operators
-// $ export ips=$(kubectl get ip -n ${namespace} | grep Manual | grep false | awk '{print $1}')
-$ export ips=$(kubectl get ip -n ${namespace} | grep Automatic | grep true | awk '{print $1}')
-
-$ for ip in $(echo $ips); do
- kubectl -n ${namespace} patch installplan ${ip} -p '{"spec":{"approved":false}}' --type merge
-done
-```
-
 <br/>
 
 ```
 $ kubectl get installplan -A
-``` -->
-
-<br/>
-
-```
 $ kubectl get subscription -n operators
 NAME                   PACKAGE                SOURCE                       CHANNEL
 opendatahub-operator   opendatahub-operator   community-operators-redhat   stable
