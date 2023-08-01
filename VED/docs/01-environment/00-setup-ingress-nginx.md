@@ -12,11 +12,13 @@ $ chmod 700 get_helm.sh
 $ ./get_helm.sh
 $ helm version
 ```
-<br/ >
+
+<br/>
 
 ## Install ingress nginx with helm.
 
-<br/ >
+<br/>
+ 
 ```
 $ helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace --set controller.service.nodePorts.http="32012" --set controller.service.nodePorts.https="32002" --set controller.ingressClassResource.default=true --set controller.service.type="NodePort" --set controller.metrics.enabled=true --set-string controller.podAnnotations."prometheus\.io/scrape"="true" --set-string controller.podAnnotations."prometheus\.io/port"="10254"
 // $ helm ls -n ingress-nginx
@@ -28,9 +30,11 @@ ingress-nginx-controller             NodePort    10.233.17.182   <none>        8
 ingress-nginx-controller-admission   ClusterIP   10.233.38.76    <none>        443/TCP                      5d
 ingress-nginx-controller-metrics     ClusterIP   10.233.33.184   <none>        10254/TCP                    5d
 ```
-<br/ >
+
+<br/>
+
 ## Install and setup Haproxy
 
-<br/ >
+<br/>
 
 
