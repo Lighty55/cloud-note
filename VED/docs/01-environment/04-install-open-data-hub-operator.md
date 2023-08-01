@@ -5,6 +5,7 @@ https://github.com/opendatahub-io/opendatahub-operator
 ## Install community-operators-redhat
 
 <br/>
+
 ```yaml
 $ cat << EOF | kubectl apply -f -
 apiVersion: operators.coreos.com/v1alpha1
@@ -64,7 +65,7 @@ EOF
 
 <br/>
 
-```
+```yaml
 $ cat << EOF | kubectl apply -f -
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
@@ -80,6 +81,10 @@ spec:
   startingCSV: opendatahub-operator.v1.1.1
 EOF
 ```
+<br/>
+
+### This is the end result.
+
 <br/>
 
 ```
