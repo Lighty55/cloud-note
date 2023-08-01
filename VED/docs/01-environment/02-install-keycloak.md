@@ -11,7 +11,7 @@ $ cd ~/projects/dev/ml/VED
 
 <br/>
 
-### If you using longhorn.
+### If you using longhorn with Keycloak.
 
 - Add `spec.temlace.spec.securityContext.fsGroup=1001` to file keycloak.yaml (notice: add this text to the deployment not add pvc or service).
 
