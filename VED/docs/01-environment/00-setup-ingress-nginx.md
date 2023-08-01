@@ -55,15 +55,21 @@ ingress-nginx-controller-metrics     ClusterIP   10.233.33.184   <none>        1
 ### Install Haproxy
 
 <br/>
+
 #### CentOS or Red Hat Enterprise Linux
+
 ```
 $ yum install haproxy
 ```
+
 #### Ubuntu
+
 ```
 $ apt-get install haproxy
 ```
+
 #### Debian
+
 ```
 $ zypper install haproxy
 ```
@@ -127,3 +133,4 @@ backend https_backend
     server lab-workernode02 172.16.68.154:32002 check
     server lab-workernode03 172.16.68.155:32002 check
 ```
+
