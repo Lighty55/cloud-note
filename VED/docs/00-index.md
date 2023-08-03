@@ -41,7 +41,6 @@ https://quay.io/ml-aml-workshop/
 <br/>
 
 - Chapter 4. The Anatomy of a Machine Learning Platform
-
 - [Chapter 5. Data Engineering](./05-data-engineering.md)
 - [Chapter 6. Machine Learning Engineering](./06-machine-learning-engineering.md)
 - [Chapter 7. Model Deployment and Automation](./07.1-model-deployment-and-automation-seldon.md)
@@ -52,8 +51,7 @@ https://quay.io/ml-aml-workshop/
 
 <br/>
 
-• Chapter 8. Building a Complete ML Project Using the Platform
-
+- Chapter 8. Building a Complete ML Project Using the Platform
 - [Chapter 9. Building Your Data Pipeline](./09-building-your-data-pipeline.md)
 - [Chapter 10. Building, Deploying, and Monitoring Your Model](./10-building-deploying-and-monitoring-your-model.md)
-  • Chapter 11. Machine Learning on Kubernetes
+- Chapter 11. Machine Learning on Kubernetes
