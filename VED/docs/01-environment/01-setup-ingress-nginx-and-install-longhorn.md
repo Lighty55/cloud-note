@@ -1,4 +1,4 @@
-# Install ingress nginx with helm and haproxy.
+# Install ingress nginx with helm, haproxy and longhorn.
 
 <br/>
 
