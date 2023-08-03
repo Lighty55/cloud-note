@@ -162,3 +162,172 @@ Jul 28 11:51:21 vdi-cicd systemd[1]: Started SYSV: HAProxy is a TCP/HTTP reverse
 <br/>
 
 ### In this document, I only setup the environment. I will talk about writing the 'ingress' file.
+
+<br/>
+
+## Install Longhorn.
+
+<br/>
+
+### Setup environment in all worker node
+
+<br/>
+
+```zsh
+$ mkdir /data/longhorn-storage/
+$ sudo yum -y install iscsi-initiator-utils
+```
+
+<br/>
+
+### Create folder and download helm chart
+
+<br/>
+
+```zsh
+$ cd
+$ mkdir longhorn-storage
+$ cd longhorn-storage
+$ helm repo add longhorn https://charts.longhorn.io
+$ helm repo update
+$ helm search repo longhorn
+$ helm pull longhorn/longhorn
+```
+
+<br/>
+
+### Change file values-longhorn.yaml
+
+<br/>
+
+```zsh
+$ cp longhorn/values.yaml values-longhorn.yaml
+$ vim values-longhorn.yaml
+```
+
+```yaml
+service:
+  ui:
+    type: ClusterIP
+  manager:
+    type: ClusterIP
+    
+defaultDataPath: /data/longhorn-storage/
+replicaSoftAntiAffinity: true
+storageMinimalAvailablePercentage: 15
+upgradeChecker: false
+defaultReplicaCount: 2
+backupstorePollInterval: 500
+nodeDownPodDeletionPolicy: do-nothing
+guaranteedEngineManagerCPU: 15
+guaranteedReplicaManagerCPU: 15
+
+ingress:  
+  enabled: true
+  ingressClassName: nginx 
+  host: longhorn-vedlab.com
+
+namespaceOverride: "longhorn-lab"
+```
+
+<br/>
+
+### Deploy longhorn
+
+<br/>
+
+```zsh
+$ helm install longhorn-storage -f values-longhorn.yaml longhorn --namespace longhorn-lab --set defaultSettings.defaultDataPath="/data/longhorn-storage"
+```
+
+<br/>
+
+- Affter deploy check process pod of longhorn
+
+```zsh
+$ kubectl get pod -n longhorn-lab
+NAME                                                READY   STATUS    RESTARTS       AGE
+csi-attacher-759f487c5-dftxc                        1/1     Running   4 (10d ago)    13d
+csi-attacher-759f487c5-mnjgq                        1/1     Running   4 (10d ago)    13d
+csi-attacher-759f487c5-zvzzw                        1/1     Running   3 (10d ago)    13d
+csi-provisioner-6df8547696-cqflr                    1/1     Running   6 (6d5h ago)   13d
+csi-provisioner-6df8547696-k7j6d                    1/1     Running   4 (7d1h ago)   13d
+csi-provisioner-6df8547696-rwbsn                    1/1     Running   4 (10d ago)    13d
+csi-resizer-6bf6dbcb4-2v4n5                         1/1     Running   4 (10d ago)    13d
+csi-resizer-6bf6dbcb4-4lkvc                         1/1     Running   3 (10d ago)    13d
+csi-resizer-6bf6dbcb4-kmfhl                         1/1     Running   5 (6d5h ago)   13d
+csi-snapshotter-69d7b7b84-8n952                     1/1     Running   6 (6d5h ago)   13d
+csi-snapshotter-69d7b7b84-frjnn                     1/1     Running   3 (10d ago)    13d
+csi-snapshotter-69d7b7b84-hlghl                     1/1     Running   4 (10d ago)    13d
+engine-image-ei-74783864-kl8jb                      1/1     Running   5 (10d ago)    13d
+engine-image-ei-74783864-slghw                      1/1     Running   4 (10d ago)    13d
+engine-image-ei-74783864-wpqkw                      1/1     Running   5 (10d ago)    13d
+instance-manager-89c5daca95bc54c99eee61ce692cc789   1/1     Running   0              10d
+instance-manager-8d812e130c9e58c479f8d318e6527ac0   1/1     Running   0              10d
+instance-manager-8e9bed22362a3ac2f3487f49414915bd   1/1     Running   0              10d
+longhorn-csi-plugin-cvx6s                           3/3     Running   11 (10d ago)   13d
+longhorn-csi-plugin-nnkrc                           3/3     Running   15 (10d ago)   13d
+longhorn-csi-plugin-xlw5s                           3/3     Running   13 (10d ago)   13d
+longhorn-driver-deployer-666b786578-99xd4           1/1     Running   5 (10d ago)    13d
+longhorn-manager-h2lmf                              1/1     Running   5 (10d ago)    13d
+longhorn-manager-hk746                              1/1     Running   4 (10d ago)    13d
+longhorn-manager-t6ct5                              1/1     Running   6 (10d ago)    13d
+longhorn-ui-76d8759584-79xzx                        1/1     Running   6 (10d ago)    13d
+longhorn-ui-76d8759584-lnjm4                        1/1     Running   4 (10d ago)    13d
+```
+
+<br/>
+
+### Deploy storage class
+
+<br/>
+
+- The storage class resource has provisioner, parameter and reclaimPolicy. However, in this project, we will only using reclaimPolicy. If you need more information about storages class resource, please [click me](https://kubernetes.io/docs/concepts/storage/storage-classes/)
+
+<br/>
+
+- Deploy storage class with reclaimPolicy = delete
+```yaml
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: longhorn-storage-delete
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+parameters:
+  numberOfReplicas: "2"                
+  staleReplicaTimeout: "2880"
+  fromBackup: ""
+  fsType: "ext4"
+```
+
+<br/>
+
+- Deploy storage class with reclaimPolicy = retain
+```yaml
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: longhorn-storage-retain
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+parameters:
+  numberOfReplicas: "2"
+  staleReplicaTimeout: "2880"
+  fromBackup: ""
+  fsType: "ext4"
+```
+
+<br/>
+
+- If you want to set defaults for defferent storage class name
+```zsh
+$ kubectl patch storageclass longhorn-storage-delete -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+$ kubectl patch storageclass longhorn-storage-retain -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
