@@ -37,10 +37,22 @@ https://github.com/vdilab/airflow-dags
 
 <br/>
 
+- vim manifests/kfdef/ml-platform.yaml
 ```
-// Check if needed
-// $ envsubst < manifests/kfdef/ml-platform.yaml
+# This is Normal Mode in VIM
+# eg: app keycloak:   keycloak-vedlab.com
+#     app jupyterhub: jupyterhub-vedlab.com
+Esc
+:%s/.${MINIKUBE_IP_ADDR}.nip.io/-<your subdomain>
 ```
+
+<br/>
+
+## Notice: If your domain is only declared to run locally
+
+<br/>
+
+**Please following this link: [Add local domain to app](../02-Note-Issue/01-Add-Host-K8s.md)
 
 <br/>
 
