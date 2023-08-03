@@ -52,7 +52,7 @@ Esc
 
 <br/>
 
-**Please following this link: [Add local domain to app](../02-Note-Issue/01-Add-Host-K8s.md)
+**Please following this link: [Add local domain to app](../02-Note-Issue/01-Add-Host-K8s.md)**
 
 <br/>
 
