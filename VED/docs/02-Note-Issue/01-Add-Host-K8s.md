@@ -1,4 +1,4 @@
-#Add host for /etc/host in apps k8s
+# Add host for /etc/host in apps k8s
 
 <br/>
 
