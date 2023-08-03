@@ -48,11 +48,43 @@ Esc
 
 <br/>
 
-## Notice: If your domain is only declared to run locally
+## Notice: You should follow these steps to avoid errors during deployment
 
 <br/>
 
-**Please following this link: [Add local domain to app](../02-Note-Issue/01-Add-Host-K8s.md)**
+**If your domain is only declared to run locally** 
+[Add local domain to app](../02-Note-Issue/01-Add-Host-K8s.md)
+
+**If you using longhorn. You should add securityContext to deployment or stateFulSet of apps**
+> keycloak
+> airflow-worker
+- Or if there is any issue with the log message "permission deny"
+
+**If you create a user with the same documentation as keycloak, you should add unverify to the mlflow configuration**
+```yaml
+spec:
+  template:
+    spec:
+      containers:
+        - name: oauth-proxy
+          image: 'quay.io/oauth2-proxy/oauth2-proxy:v7.2.0'
+          args:
+            - '--provider=keycloak-oidc'
+            - '--https-address='
+            - '--http-address=:5000'
+            - '--client-id=mflow'
+            - '--client-secret=ad216993-cf3a-4742-ba17-b531d5c22046'
+            - '--upstream=http://localhost:5500'
+            - '--email-domain=*'
+            - '--insecure-oidc-allow-unverified-email=true' <- add this line
+```
+
+**If you are using a Kubernetes cluster version v1.25.x or later**
+[Install new version seldon core](./01-environment/06-install-seldon-core.md)
+
+<br/>
+
+## Deploy all application in namespace ml-workshop
 
 <br/>
 
@@ -63,23 +95,13 @@ $ kubectl create ns ml-workshop
 <br/>
 
 ```
-// Start Platform Creating
-$ envsubst < manifests/kfdef/ml-platform.yaml | kubectl create -f - -n ml-workshop
+kubectl create -f manifests/kfdef/ml-platform.yaml -n ml-workshop
 ```
 
 <br/>
 
 ```
-// Need to wait something about 15 minutes
-$ k9s -n ml-workshop
-
-// $ watch kubectl get pods -n ml-workshop
-```
-
-<br/>
-
-```
-$ kubectl get pods -n ml-workshop
+$ kubectl get pod -n ml-workshop (please wait 15 minutes)
 NAME                                           READY   STATUS      RESTARTS        AGE
 app-aflow-airflow-scheduler-6ccc679fc6-6k9kv   2/2     Running     0               17m
 app-aflow-airflow-web-55767cd99d-x9kh7         2/2     Running     0               9m41s
