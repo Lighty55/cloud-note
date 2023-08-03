@@ -1,25 +1,39 @@
 # Open Data Hub (ODH) installation
 
-<br/>
-
 ```
-$ export MINIKUBE_IP_ADDR=$(minikube ip --profile ${PROFILE})
-$ echo ${MINIKUBE_IP_ADDR}
-```
-
-<br/>
-
-```
-// Crate empty github repo with branch name main
-https://github.com/wildmakaka/airflow-dags
+$ mkdir -p  ~/projects/dev/ml/
+$ cd ~/projects/dev/ml/
+$ git clone https://github.com/Lighty55/cloud-note.git --branch VED
+$ cd ~/projects/dev/ml/VED
 ```
 
 <br/>
 
+## Create empty github repo with branch name main
+
+<br/>
+
 ```
-// Original dags repo https://github.com/airflow-dags/dags/
-$ export AIRFLOW_DAGS_REPO=https://github.com/wildmakaka/airflow-dags.git
+https://github.com/vdilab/airflow-dags
 ```
+
+<br/>
+
+## Add new repo
+
+<br/>
+
+- vim manifests/kfdef/ml-platform.yaml
+```yaml
+- name: DAG_REPO
+  value: 'https://github.com/vdilab/airflow-dags.git'
+```
+
+<br/>
+
+## Change domain for all service
+
+<br/>
 
 <br/>
 

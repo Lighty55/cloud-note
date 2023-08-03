@@ -15,7 +15,7 @@ $ cd ~/projects/dev/ml/VED
 
 - Add `spec.temlace.spec.securityContext.fsGroup=1001` to file keycloak.yaml (notice: add this text to the deployment not add pvc or service).
 
-```
+```yaml
 ...
 spec:
   templace:
