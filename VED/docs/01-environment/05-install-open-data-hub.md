@@ -55,10 +55,14 @@ Esc
 **If your domain is only declared to run locally** 
 [Add local domain to app](../02-Note-Issue/01-Add-Host-K8s.md)
 
+<br/>
+
 **If you using longhorn. You should add securityContext to deployment or stateFulSet of apps**
 > keycloak <br/>
 > airflow-worker
-- Or if there is any issue with the log message "permission deny"
+- Or if there is any issue with the log message "permission deny". [Add securityContext](https://github.com/Lighty55/cloud-note/blob/VED/VED/docs/01-environment/02-install-keycloak.md#if-you-using-longhorn-with-keycloak)
+
+<br/>
 
 **If you create a user with the same documentation as keycloak, you should add unverify to the mlflow configuration**
 ```yaml
@@ -78,6 +82,8 @@ spec:
             - '--email-domain=*'
             - '--insecure-oidc-allow-unverified-email=true' <- add this line
 ```
+
+<br/>
 
 **If you are using a Kubernetes cluster version v1.25.x or later**
 [Install new version seldon core](./01-environment/06-install-seldon-core.md)
