@@ -64,7 +64,7 @@ Esc
 
 <br/>
 
-**If you create a user with the same documentation as keycloak, you should add unverify to the mlflow configuration**
+**If you create a user with the same documentation as keycloak, you should add `insecure-oidc-allow-unverified-email=true` to the mlflow configuration**
 ```yaml
 spec:
   template:
@@ -80,7 +80,7 @@ spec:
             - '--client-secret=ad216993-cf3a-4742-ba17-b531d5c22046'
             - '--upstream=http://localhost:5500'
             - '--email-domain=*'
-            - '--insecure-oidc-allow-unverified-email=true' <- add this line
+            - '--insecure-oidc-allow-unverified-email=true'                #<- add this line
 ```
 
 <br/>
