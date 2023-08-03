@@ -2,7 +2,7 @@
 
 <br/>
 
-## Notice: if you have already executed the kfdef manifest, please follow these step ([Or else, move on to the next step]()).
+## Notice: if you have already executed the kfdef manifest, please follow these step ([Or else, move on to the next step](https://github.com/Lighty55/cloud-note/blob/VED/VED/docs/01-environment/06-install-seldon-core.md#install-ambassador-with-helm)).
 
 <br/>
 
