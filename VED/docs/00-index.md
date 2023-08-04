@@ -16,13 +16,15 @@ https://quay.io/ml-aml-workshop/
 
 ### Required environment
 
-- [Install Kubernetesnn Cluster](./01-environment/01-run-minikube.md)
+- [Install Kubernetesnn Cluster](./01-environment/00-setup-k8s-cluster.md)
 
-- [Install Operator Lifecycle Manager (OLM)](./01-environment/02-installing-operator-lifecycle-manager.md)
+- [Install Ingress-nginx, haproxy and longhorn](./01-environment/01-setup-ingress-nginx-and-install-longhorn.md)
 
-- [Install Open Data Hub (ODH) operator](./01-environment/03-installing-the-open-data-hub-operator.md)
+- [Install Operator Lifecycle Manager (OLM)](./01-environment/03-installing-operator-lifecycle-manager.md)
 
-- [Install Keycloak](./01-environment/04-installing-keycloak.md)
+- [Install Open Data Hub (ODH) operator](./01-environment/04-installing-the-open-data-hub-operator.md)
+
+- [Install Keycloak](./01-environment/02-installing-keycloak.md)
 
 - [Install Open Data Hub (ODH)](./01-environment/05-installing-open-data-hub.md)
 
