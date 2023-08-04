@@ -12,12 +12,6 @@ $ docker login
 $ docker push webmakaka/scikit-notebook:v1.1.0
 ```
 
-<br/>
-
-????
-
-<br/>
-
 ```
 $ cd ../
 $ vi manifests/jupyterhub-images/base/customnotebook-imagestream.yaml
